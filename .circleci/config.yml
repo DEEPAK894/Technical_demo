@@ -7,14 +7,20 @@ jobs:
 
     steps:
       - checkout
-      # Add more steps as needed for your specific project setup
-
   deploy:
     docker:
       - image: python:3.8
 
     steps:
       - checkout
+- run:
+    name: Docker Login
+    command: |
+      echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
       - run:
           name: Setup Snowflake Connection
           command: |
