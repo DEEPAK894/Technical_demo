@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Configure dbt Cloud
           command: |
-            dbt cloud auth --token 971945e6e76465fbace61e086c53187420a7c473
+            dbt cloud auth --token dbtc_P0B-4m0Svz5HEf1nPKUWN3gHOZ6VyD-192tc3TwT0FuLDikzdc
 
       - run:
           name: Run dbt
