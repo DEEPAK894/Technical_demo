@@ -8,4 +8,5 @@ circleci:
     database: "{{ env_var('DBT_DATA_MODELING_SNOWFLAKE_DATABASE', 'analytics') }}"
     warehouse: "dbt_wh"
     schema: "public"
+    
     query_tag: "circleci_dbt"
