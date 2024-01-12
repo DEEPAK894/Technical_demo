@@ -1,30 +1,54 @@
 version: 2.1
 
 jobs:
-  dbt-cloud:
+  build:
     docker:
       - image: python:3.8
+
     steps:
       - checkout
-      - run:          
+      # Add more steps as needed for your specific project setup
+
+  deploy:
+    docker:
+      - image: python:3.8
+
+    steps:
+      - checkout
+      - run:
           name: Setup Snowflake Connection
           command: |
             echo "SNOWSQL_ACCOUNT: $SNOWSQL_ACCOUNT"
             echo "SNOWSQL_USER: $SNOWSQL_USER"
             echo "SNOWSQL_PASSWORD: $SNOWSQL_PASSWORD"
+
       - run:
           name: Install dbt
           command: |
             pip install dbt
       - run:
-          name: "Run dbt commands"
+          name: Configure dbt Cloud
           command: |
-            echo "Buid success"
+            dbt cloud auth --token 971945e6e76465fbace61e086c53187420a7c473
+
+      - run:
+          name: Run dbt
+          command: |
+            dbt run --select order_summary
       - run:
           name: "Pipeline builded"
-          command: echo "Snowflake succeeded!"
+          command: echo "Snowflake succeeded!"   
+
+
 workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - dbt-cloud
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main
