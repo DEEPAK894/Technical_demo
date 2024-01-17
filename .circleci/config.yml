@@ -13,6 +13,7 @@ jobs:
             echo "SNOWSQL_ACCOUNT: $SNOWSQL_ACCOUNT"
             echo "SNOWSQL_USER: $SNOWSQL_USER"
             echo "SNOWSQL_PASSWORD: $SNOWSQL_PASSWORD"
+            
       - run:
           name: Install dbt
           command: |
